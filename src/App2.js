@@ -55,7 +55,7 @@ function Topics() {
                 <li>
                     <Link to={`${match.url}/props-v-state`}>
                         Props v. State
-          </Link>
+                    </Link>
                 </li>
             </ul>
 
