@@ -1,5 +1,4 @@
-import { Component } from 'react'
-import './../index.css'
+import { Component } from 'react';
 
 class Table extends Component {
     render() {
