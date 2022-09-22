@@ -3,7 +3,7 @@ const TODO_DATA = [
     {
         id: 1,
         taskName: 'abc1',
-        active: false,
+        active: true,
         deadline: '2022-09-21'
     },
     {
@@ -25,10 +25,26 @@ const TODO_DATA = [
         deadline: '2022-08-22'
     }
 ]
+
+const getDate = function () {
+    var date = new Date();
+    var mm = date.getMonth() + 1; // getMonth() is zero-based
+    if (mm.toString().length < 2) {
+        mm = '0' + mm;
+    }
+    var dd = date.getDate();
+    if (dd.toString().length < 2) {
+        dd = '0' + dd;
+    }
+    var yy = date.getFullYear();
+    let nowTime = yy.toString() + '-' + mm.toString() + '-' + dd.toString();
+    return nowTime;
+}
+
 const INITIAL_STATE = {
     taskName: '',
-    active: true,
-    deadline: '2022-09-22'
+    active: false,
+    deadline: getDate()
 }
 
 const App = () => {
@@ -173,7 +189,8 @@ const App = () => {
                             <div key={it.id} className="list-group-item"
                                 onClick={() => setForm(it)}>
                                 <div className="row">
-                                    <div className="col">{it.taskName}</div>
+                                    <div className="col" style={{ color: it.active ? 'red' : 'gray' }}>{it.taskName}</div>
+                                    <div className="col" >{it.deadline}</div>
                                     <div className="col-3">
                                         <button
                                             className="btn btn-danger"
