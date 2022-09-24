@@ -26,25 +26,25 @@ const TODO_DATA = [
     }
 ]
 
-const getDate = function () {
-    var date = new Date();
-    var mm = date.getMonth() + 1; // getMonth() is zero-based
+const getCurrentDate = function () {
+    const date = new Date();
+    let mm = date.getMonth() + 1; // getMonth() is zero-based
     if (mm.toString().length < 2) {
         mm = '0' + mm;
     }
-    var dd = date.getDate();
+    let dd = date.getDate();
     if (dd.toString().length < 2) {
         dd = '0' + dd;
     }
-    var yy = date.getFullYear();
-    let nowTime = yy.toString() + '-' + mm.toString() + '-' + dd.toString();
-    return nowTime;
+    const yy = date.getFullYear();
+    let currentDate = yy.toString() + '-' + mm.toString() + '-' + dd.toString();
+    return currentDate;
 }
 
 const INITIAL_STATE = {
     taskName: '',
     active: false,
-    deadline: getDate()
+    deadline: getCurrentDate()
 }
 
 const App = () => {
@@ -86,6 +86,16 @@ const App = () => {
         e.preventDefault();
         const { taskName, deadline, active } = form;
         const errors = {};
+        if (!taskName) {
+            errors.taskName = "Please input Task Name."
+        } else if (taskName.length < 3 || taskName.length > 12) {
+            errors.taskName = "Please inpyt Task Name 3 ~ 12 characters."
+        } else if (
+            list.findIndex(it => it.id !== form.id && it.taskName === taskName) !== -1
+        ) {
+            errors.taskName = "Task Name is duplicated"
+        }
+        // console.log(deadline);
         if (!deadline) {
             errors.deadline = "Please input deadline.";
         }
