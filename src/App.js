@@ -55,30 +55,28 @@ const App = () => {
     const handleDeleteTodo = (id) => {
         const item = list.find(it => it.id === id);
         if (window.confirm(`Delete task: ${item.taskName} ?`)) {
-            const nextList = [...list].filter(it => it.id !== id);
+            const nextList = list.filter(it => it.id !== id);
             setList(nextList);
         }
     }
 
     const handleTaskNameChanged = (e) => {
         const { target } = e;
-        const value = target.value;
+        const taskName = target.value;
         const errors = {};
-        if (!value) {
+        if (!taskName) {
             errors.taskName = "Please input Task Name.";
-        } else if (value.length < 3 || value.length > 12) {
+        } else if (taskName.length < 3 || taskName.length > 12) {
             errors.taskName = "Please input Task Name 3 ~ 12 characters.";
         } else if (
-            // list.findIndex(it => it.id !== form.id && it.taskName === value) !== -1
-            list.findIndex(it => it.taskName === value) !== -1
+            // list.findIndex(it => it.id !== form.id && it.taskName === taskName) !== -1
+            list.findIndex(it => it.taskName === taskName) !== -1
         ) {
             errors.taskName = "Task Name is duplicated";
         }
-        setFeedbacks({
-            ...errors
-        });
+        setFeedbacks(errors);
         setForm({
-            taskName: value
+            taskName
         });
     }
 
@@ -168,17 +166,17 @@ const App = () => {
                                 {feedbacks.deadline}
                             </div>}
                         </div>
-                        <div class="custom-control custom-checkbox">
+                        <div className="custom-control custom-checkbox">
                             <input
                                 name="active" type="checkbox"
-                                class="custom-control-input" id="customCheck1"
+                                className="custom-control-input" id="customCheck1"
                                 checked={form.active}
                                 onChange={({ target }) => setForm({
                                     ...form,
                                     active: target.checked
                                 })}
                             />
-                            <label class="custom-control-label" htmlFor="customCheck1">Check this custom checkbox</label>
+                            <label className="custom-control-label" htmlFor="customCheck1">Check this custom checkbox</label>
                         </div>
                         <div className="d-flex" style={{ gap: 10 }}>
                             <button className="btn btn-primary" type="submit">
