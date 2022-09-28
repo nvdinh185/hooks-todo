@@ -76,6 +76,7 @@ const App = () => {
         }
         setFeedbacks(errors);
         setForm({
+            ...form,
             taskName
         });
     }
@@ -87,7 +88,7 @@ const App = () => {
         if (!taskName) {
             errors.taskName = "Please input Task Name."
         } else if (taskName.length < 3 || taskName.length > 12) {
-            errors.taskName = "Please inpyt Task Name 3 ~ 12 characters."
+            errors.taskName = "Please input Task Name 3 ~ 12 characters."
         } else if (
             list.findIndex(it => it.id !== form.id && it.taskName === taskName) !== -1
         ) {
@@ -102,22 +103,20 @@ const App = () => {
         if (Object.keys(errors).length) {
             return;
         }
-        const nextList = [...list];
         if (form.id) {
             // Update
-            const index = nextList.findIndex(it => it.id === form.id);
-            nextList[index] = form;
+            const index = list.findIndex(it => it.id === form.id);
+            list[index] = form;
         } else {
             // Add
-            nextList.push({
+            list.push({
                 id: Math.random(),
                 taskName,
                 deadline,
                 active
             })
         }
-        setList(nextList);
-        console.log(nextList);
+        handleResetForm();
     }
 
     const handleResetForm = () => {
@@ -145,7 +144,7 @@ const App = () => {
                                 value={form.taskName}
                                 onChange={handleTaskNameChanged}
                             />
-                            {!!feedbacks.taskName && <div className="invalid-feedback">
+                            {feedbacks.taskName && <div className="invalid-feedback">
                                 {feedbacks.taskName}
                             </div>}
                         </div>
@@ -162,7 +161,7 @@ const App = () => {
                                     setForm({ ...form, deadline: target.value })
                                 }}
                             />
-                            {!!feedbacks.deadline && <div className="invalid-feedback">
+                            {feedbacks.deadline && <div className="invalid-feedback">
                                 {feedbacks.deadline}
                             </div>}
                         </div>
