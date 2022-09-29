@@ -103,19 +103,21 @@ const App = () => {
         if (Object.keys(errors).length) {
             return;
         }
+        const nextList = [...list];
         if (form.id) {
             // Update
             const index = list.findIndex(it => it.id === form.id);
-            list[index] = form;
+            nextList[index] = form;
         } else {
             // Add
-            list.push({
+            nextList.push({
                 id: Math.random(),
                 taskName,
                 deadline,
                 active
             })
         }
+        setList(nextList);
         handleResetForm();
     }
 
@@ -155,7 +157,6 @@ const App = () => {
                                 name="deadline"
                                 className={`form-control ${feedbacks.deadline ? 'is-invalid' : ''}`}
                                 type="date"
-                                placeholder="YYYY/DD/MM"
                                 value={form.deadline}
                                 onChange={({ target }) => {
                                     setForm({ ...form, deadline: target.value })
